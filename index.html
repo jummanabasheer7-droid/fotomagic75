@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>AR Video Frame</title>
+  <title>💖 Valentine LoveLock AR</title>
 
   <!-- A-Frame -->
   <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
@@ -10,122 +10,404 @@
   <!-- MindAR -->
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 
-  <!-- Font Awesome -->
+  <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
-    body {
-      margin: 0;
-      overflow: hidden;
-      background: #000;
-      font-family: Arial, sans-serif;
+    body { 
+      margin: 0; 
+      overflow: hidden; 
+      font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
     }
-
-    .hidden {
-      display: none !important;
-    }
-
-    /* Loading Screen */
-    #loading-screen {
+    
+    /* Valentine Hearts Animation Background */
+    .hearts-container {
       position: fixed;
-      inset: 0;
-      background: #000;
-      color: white;
-      display: flex;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    .heart {
+      position: absolute;
+      background: linear-gradient(45deg, #ff4081, #ff79a6);
+      width: 20px;
+      height: 20px;
+      transform: rotate(45deg);
+      opacity: 0.7;
+      animation: float 8s infinite ease-in-out;
+    }
+    
+    .heart:before,
+    .heart:after {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background: inherit;
+      border-radius: 50%;
+      position: absolute;
+    }
+    
+    .heart:before {
+      top: -10px;
+      left: 0;
+    }
+    
+    .heart:after {
+      top: 0;
+      left: -10px;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: rotate(45deg) translateY(0); opacity: 0.7; }
+      50% { transform: rotate(45deg) translateY(-20px); opacity: 0.4; }
+    }
+    
+    /* Date Overlay */
+    #date-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(26, 26, 46, 0.95);
+      display: none;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       z-index: 9999;
+      color: white;
     }
-
-    /* Bottom Indicator */
-    .indicator {
+    
+    /* Glassmorphism Container */
+    .date-container {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 40px;
+      border-radius: 25px;
+      text-align: center;
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 20px 40px rgba(255, 64, 129, 0.2),
+                  inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      max-width: 500px;
+      width: 90%;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .date-container:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #ff4081, #ff79a6, #ff4081);
+      background-size: 200% 100%;
+      animation: shimmer 3s infinite linear;
+    }
+    
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    
+    /* Title with romantic styling */
+    .date-container h2 {
+      margin-bottom: 10px;
+      color: #ff79a6;
+      font-size: 32px;
+      text-shadow: 0 2px 10px rgba(255, 64, 129, 0.3);
+      letter-spacing: 1px;
+    }
+    
+    .date-container h2 i {
+      margin-right: 10px;
+      color: #ff4081;
+    }
+    
+    .date-container p {
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 30px;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+    
+    /* Date Inputs with Heart Design */
+    .date-input {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 30px;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+    
+    .date-input:before {
+      content: '💝';
+      position: absolute;
+      left: -40px;
+      font-size: 24px;
+      animation: heartbeat 1.5s infinite;
+    }
+    
+    .date-input:after {
+      content: '💝';
+      position: absolute;
+      right: -40px;
+      font-size: 24px;
+      animation: heartbeat 1.5s infinite 0.5s;
+    }
+    
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+    
+    .date-input input {
+      width: 80px;
+      padding: 18px 0;
+      font-size: 22px;
+      text-align: center;
+      border: none;
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+      font-weight: bold;
+    }
+    
+    .date-input input:focus {
+      outline: none;
+      border-color: #ff4081;
+      box-shadow: 0 0 20px rgba(255, 64, 129, 0.3);
+      background: rgba(255, 255, 255, 0.15);
+    }
+    
+    .date-input input::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+    
+    .date-input span {
+      align-self: center;
+      font-size: 28px;
+      color: #ff79a6;
+      font-weight: bold;
+      text-shadow: 0 2px 5px rgba(255, 64, 129, 0.3);
+    }
+    
+    /* Unlock Button with Glow Effect */
+    #submit-btn {
+      background: linear-gradient(45deg, #ff4081, #ff79a6);
+      color: white;
+      border: none;
+      padding: 18px 50px;
+      font-size: 20px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: bold;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(255, 64, 129, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin: 0 auto;
+    }
+    
+    #submit-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(255, 64, 129, 0.6);
+      background: linear-gradient(45deg, #ff79a6, #ff4081);
+    }
+    
+    #submit-btn:active {
+      transform: translateY(1px);
+    }
+    
+    #submit-btn:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.7s;
+    }
+    
+    #submit-btn:hover:before {
+      left: 100%;
+    }
+    
+    /* Error Message with Romantic Style */
+    #error-message {
+      color: #ffcccc;
+      margin-top: 20px;
+      height: 25px;
+      font-size: 16px;
+      padding: 10px;
+      border-radius: 10px;
+      background: rgba(255, 64, 129, 0.1);
+      width: 100%;
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    
+    #error-message.show {
+      animation: shake 0.5s;
+    }
+    
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+      20%, 40%, 60%, 80% { transform: translateX(5px); }
+    }
+    
+    /* Footer Instructions */
+    .instructions {
+      margin-top: 30px;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.6);
+      max-width: 400px;
+      line-height: 1.6;
+      padding: 15px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.05);
+    }
+    
+    /* Camera Indicator */
+    .camera-indicator {
       position: fixed;
-      bottom: 25px;
+      bottom: 30px;
       left: 50%;
       transform: translateX(-50%);
-      background: rgba(0,0,0,0.7);
-      padding: 10px 18px;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 10px 20px;
       border-radius: 20px;
       color: white;
       font-size: 14px;
       z-index: 100;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
-
-    /* Tap to Unmute Overlay */
-    #tap-overlay {
+    
+    /* Loading Screen */
+    #loading-screen {
       position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.5);
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      z-index: 200;
+      z-index: 10000;
       color: white;
-      font-size: 18px;
-      text-align: center;
-      cursor: pointer;
+      transition: opacity 0.5s;
     }
-
-    #tap-overlay div {
-      background: rgba(0,0,0,0.8);
-      padding: 20px 30px;
-      border-radius: 30px;
+    
+    .loading-heart {
+      font-size: 60px;
+      color: #ff4081;
+      animation: pulse 1.5s infinite;
+      margin-bottom: 20px;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+    
+    .loading-text {
+      font-size: 18px;
+      color: #ff79a6;
+      letter-spacing: 2px;
+    }
+    
+    /* Hide loading screen */
+    .hidden {
+      display: none !important;
     }
   </style>
 </head>
 
 <body>
 
-<!-- Loading -->
+<!-- Loading Screen -->
 <div id="loading-screen">
-  <i class="fas fa-spinner fa-spin"></i>
-  <p style="margin-top:10px;">MagicFrames By fotoMagic</p>
+  <div class="loading-heart">💖</div>
+  <div class="loading-text">LoveLockFrame by FotoMagic</div>
 </div>
 
-<!-- Status -->
-<div class="indicator hidden" id="indicator">
-  <i class="fas fa-camera"></i> Scan the image
-</div>
+<!-- Animated Hearts Background -->
+<div class="hearts-container" id="hearts-container"></div>
 
-<!-- Tap to Unmute -->
-<div id="tap-overlay" class="hidden">
-  <div>
-    <i class="fas fa-volume-up"></i><br><br>
-    Tap to enable sound
+<!-- Date Overlay -->
+<div id="date-overlay">
+  <div class="date-container">
+    <h2><i class="fas fa-heart"></i> Unlock Our Memory</h2>
+    <p>Our special moment is protected. Enter the date that means everything to us</p>
+    
+    <div class="date-input">
+      <input type="text" id="day" placeholder="DD" maxlength="2">
+      <span>/</span>
+      <input type="text" id="month" placeholder="MM" maxlength="2">
+      <span>/</span>
+      <input type="text" id="year" placeholder="YYYY" maxlength="4">
+    </div>
+    
+    <button id="submit-btn">
+      <i class="fas fa-lock-open"></i> Open My Heart
+    </button>
+    
+    <div id="error-message"></div>
+    
+    <div class="instructions">
+      <i class="fas fa-info-circle"></i> 
+      Enter the day our love story began (DD/MM/YYYY format)
+    </div>
   </div>
 </div>
 
-<!-- AR Scene -->
+<!-- Camera Indicator -->
+<div class="camera-indicator hidden" id="camera-indicator">
+  <i class="fas fa-video"></i> Scanning for our memory...
+</div>
+
+<!-- A-Frame Scene -->
 <a-scene
   mindar-image="imageTargetSrc: targets.mind;"
-  vr-mode-ui="enabled:false"
-  device-orientation-permission-ui="enabled:false"
-  loading-screen="enabled:false">
+  vr-mode-ui="enabled: false"
+  device-orientation-permission-ui="enabled: false"
+  loading-screen="enabled: false">
 
   <a-assets>
-    <video
-      id="arVideo"
-      src="machafrndvideo.mp4"
-      loop
-      muted
-      playsinline
-      crossorigin="anonymous"
-      preload="auto">
-    </video>
+    <video id="arVideo" src="foto75.mp4" loop playsinline crossorigin="anonymous" preload="auto"></video>
   </a-assets>
 
-  <a-camera position="0 0 0" look-controls="enabled:false"></a-camera>
+  <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
   <a-entity mindar-image-target="targetIndex: 0">
     <a-video
       src="#arVideo"
-      width="0.90"
-      height="1.33"
+      width="1"
+      height="1.45"
       position="0 0 0"
       visible="false">
     </a-video>
@@ -134,51 +416,198 @@
 </a-scene>
 
 <script>
-  const video = document.getElementById("arVideo");
-  const videoPlane = document.querySelector("a-video");
+  // Set your special date here (DD/MM/YYYY)
+  const SPECIAL_DATE = {
+    day: "27",
+    month: "09",
+    year: "2026"
+  };
+
+  // DOM elements
+  const dateOverlay = document.getElementById("date-overlay");
+  const dayInput = document.getElementById("day");
+  const monthInput = document.getElementById("month");
+  const yearInput = document.getElementById("year");
+  const submitBtn = document.getElementById("submit-btn");
+  const errorMessage = document.getElementById("error-message");
+  const loadingScreen = document.getElementById("loading-screen");
+  const cameraIndicator = document.getElementById("camera-indicator");
+  const video = document.querySelector("#arVideo");
+  const videoElement = document.querySelector("a-video");
   const scene = document.querySelector("a-scene");
-  const indicator = document.getElementById("indicator");
-  const tapOverlay = document.getElementById("tap-overlay");
-  const loading = document.getElementById("loading-screen");
+  const heartsContainer = document.getElementById("hearts-container");
 
-  let isPlaying = false;
+  let dateUnlocked = false;
 
-  // Target Found
-  scene.addEventListener("targetFound", async () => {
-    indicator.classList.remove("hidden");
-    indicator.innerHTML = '<i class="fas fa-play"></i> Playing video';
+  // Create floating hearts
+  function createHearts() {
+    for (let i = 0; i < 15; i++) {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.top = Math.random() * 100 + 'vh';
+      heart.style.animationDelay = Math.random() * 5 + 's';
+      heart.style.width = (Math.random() * 15 + 10) + 'px';
+      heart.style.height = heart.style.width;
+      heart.style.opacity = Math.random() * 0.5 + 0.3;
+      heartsContainer.appendChild(heart);
+    }
+  }
 
-    videoPlane.setAttribute("visible", "true");
-    video.muted = true;
+  // Function to validate date
+  function validateDate(day, month, year) {
+    const dayNum = parseInt(day);
+    const monthNum = parseInt(month);
+    const yearNum = parseInt(year);
+    
+    // Basic validation
+    if (isNaN(dayNum) || isNaN(monthNum) || isNaN(yearNum)) {
+      return false;
+    }
+    
+    // Check against special date
+    return day === SPECIAL_DATE.day && 
+           month === SPECIAL_DATE.month && 
+           year === SPECIAL_DATE.year;
+  }
 
-    try {
-      await video.play();
-      isPlaying = true;
-      tapOverlay.classList.remove("hidden");
-    } catch (e) {
-      console.log("Autoplay blocked:", e);
+  // Format date input
+  dayInput.addEventListener('input', () => {
+    if (dayInput.value.length >= 2) {
+      monthInput.focus();
+    }
+  });
+  
+  monthInput.addEventListener('input', () => {
+    if (monthInput.value.length >= 2) {
+      yearInput.focus();
     }
   });
 
-  // Target Lost
+  // Submit button click
+  submitBtn.addEventListener('click', () => {
+    const day = dayInput.value.padStart(2, '0');
+    const month = monthInput.value.padStart(2, '0');
+    const year = yearInput.value;
+    
+    if (validateDate(day, month, year)) {
+      dateUnlocked = true;
+      dateOverlay.style.display = 'none';
+      errorMessage.textContent = "";
+      errorMessage.classList.remove('show');
+      
+      // Make video visible and play
+      videoElement.setAttribute('visible', 'true');
+      video.play().catch(e => {
+        console.log("Video play error:", e);
+      });
+      
+      // Show success message briefly
+      cameraIndicator.innerHTML = '<i class="fas fa-heart"></i> Memory unlocked! Point camera at our special photo';
+      setTimeout(() => {
+        cameraIndicator.innerHTML = '<i class="fas fa-video"></i> Our memory is playing...';
+      }, 3000);
+    } else {
+      errorMessage.textContent = "❌ This memory is not yours to unlock. Try again with our special date.";
+      errorMessage.classList.add('show');
+      
+      // Shake animation for wrong input
+      dateOverlay.style.animation = 'shake 0.5s';
+      setTimeout(() => {
+        dateOverlay.style.animation = '';
+      }, 500);
+    }
+  });
+
+  // Allow Enter key to submit
+  yearInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      submitBtn.click();
+    }
+  });
+
+  // AR scene events
+  scene.addEventListener("targetFound", () => {
+    console.log("Target found!");
+    cameraIndicator.classList.remove('hidden');
+    
+    if (!dateUnlocked) {
+      // Show date overlay only if not already unlocked
+      dateOverlay.style.display = 'flex';
+      dayInput.focus();
+      cameraIndicator.innerHTML = '<i class="fas fa-lock"></i> Memory detected! Enter date to unlock';
+    } else {
+      // If already unlocked, play video directly
+      videoElement.setAttribute('visible', 'true');
+      video.play().catch(e => {
+        console.log("Video play error:", e);
+      });
+      cameraIndicator.innerHTML = '<i class="fas fa-heart"></i> Reliving our memory...';
+    }
+  });
+
   scene.addEventListener("targetLost", () => {
+    console.log("Target lost!");
     video.pause();
-    videoPlane.setAttribute("visible", "false");
-    indicator.classList.add("hidden");
-    tapOverlay.classList.add("hidden");
-    isPlaying = false;
+    cameraIndicator.innerHTML = '<i class="fas fa-video"></i> Scanning for our memory...';
+    
+    // Hide video element when target is lost
+    videoElement.setAttribute('visible', 'false');
+    
+    // Hide date overlay when target is lost (unless they're entering date)
+    if (!dateUnlocked) {
+      dateOverlay.style.display = 'none';
+      cameraIndicator.classList.add('hidden');
+    }
   });
 
-  // Tap to Unmute (REQUIRED FOR iPHONE)
-  tapOverlay.addEventListener("click", () => {
-    video.muted = false;
-    tapOverlay.classList.add("hidden");
+  // Clear inputs when overlay is hidden
+  const observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+      if (mutation.attributeName === 'style') {
+        if (dateOverlay.style.display === 'none' && !dateUnlocked) {
+          dayInput.value = '';
+          monthInput.value = '';
+          yearInput.value = '';
+          errorMessage.textContent = '';
+          errorMessage.classList.remove('show');
+        }
+      }
+    });
+  });
+  
+  observer.observe(dateOverlay, { attributes: true });
+
+  // Initialize on load
+  window.addEventListener('load', () => {
+    // Create floating hearts
+    createHearts();
+    
+    // Hide loading screen after a short delay
+    setTimeout(() => {
+      loadingScreen.style.opacity = '0';
+      setTimeout(() => {
+        loadingScreen.classList.add('hidden');
+      }, 500);
+    }, 1500);
+    
+    // Check if scene is ready
+    if (scene.hasLoaded) {
+      console.log('AR Scene is ready');
+    } else {
+      scene.addEventListener('loaded', () => {
+        console.log('AR Scene loaded successfully');
+      });
+    }
   });
 
-  // Init
-  window.addEventListener("load", () => {
-    setTimeout(() => loading.classList.add("hidden"), 1200);
+  // Handle video errors
+  video.addEventListener('error', (e) => {
+    console.error("Video error:", e);
+    errorMessage.textContent = "Unable to load memory. Please check your video file.";
+    errorMessage.classList.add('show');
   });
+
 </script>
 
 </body>
